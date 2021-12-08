@@ -83,7 +83,7 @@ class MessageGenerator {
     }
 
     String getGameTypeGuessMessage(Game game) {
-        return String.format(GAME_BOUNDS, game.getLowerBound(), game.getHigherBound()) + "\n"
+        return String.format(GAME_BOUNDS, game.getBounds().getLowerBound(), game.getBounds().getHigherBound()) + "\n"
                 + GAME_TYPE_GUESS;
     }
 
