@@ -17,7 +17,7 @@ java {
 }
 
 application {
-    mainClass.set("pl.fyko.guess_the_number.UI")
+    mainClass.set("pl.fyko.guess_the_number.Main")
     run {
         standardInput(System.in)
     }

@@ -6,9 +6,15 @@ package pl.fyko.guess_the_number;
  * @author Filip Kołodziejczyk
  */
 class GameConfig {
-    private int lowerBound = 1;
-    private int higherBound = 100;
-    private int maxGuessCount = 10;
+    private int lowerBound;
+    private int higherBound;
+    private int maxGuessCount;
+
+    GameConfig(int lowerBound, int higherBound, int maxGuessCount) {
+        this.lowerBound = lowerBound;
+        this.higherBound = higherBound;
+        this.maxGuessCount = maxGuessCount;
+    }
 
     int getLowerBound() {
         return lowerBound;

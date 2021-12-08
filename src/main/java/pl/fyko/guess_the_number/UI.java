@@ -1,5 +1,8 @@
 package pl.fyko.guess_the_number;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 /**
@@ -11,20 +14,28 @@ import java.util.Scanner;
  * @author Filip Kołodziejczyk
  */
 class UI {
-    private final GameConfig gameConfig = new GameConfig();
+    private final static int DEFAULT_LOWER_BOUND = 1;
+    private final static int DEFAULT_HIGHER_BOUND = 100;
+    private final GameConfig gameConfig;
     private final MessageGenerator messageGenerator = new MessageGenerator();
     private final Scanner scanner;
 
-    public static void main(String[] args) {
-        UI ui = new UI();
-        ui.start();
+
+    UI() {
+        this(DEFAULT_LOWER_BOUND, DEFAULT_HIGHER_BOUND);
     }
 
-    private UI() {
+    UI(int lowerBound, int higherBound) {
+        if (higherBound <= lowerBound) {
+            lowerBound = DEFAULT_LOWER_BOUND;
+            higherBound = DEFAULT_HIGHER_BOUND;
+        }
+
         scanner = new Scanner(System.in);
+        gameConfig = new GameConfig(lowerBound, higherBound, 10);
     }
 
-    private void start() {
+    void start() {
         System.out.println(messageGenerator.getWelcomeMessage());
         mainMenu();
     }
