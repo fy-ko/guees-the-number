@@ -120,7 +120,6 @@ class Game {
      * Gets information if latest guess is in set bounds.
      * @return true if latest guess is between lower and higher bound
      */
-    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     boolean isGuessInBounds() {
         return guess >= lowerBound && guess <= higherBound;
     }
