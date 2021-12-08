@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'application'
 }
 
 group = 'pl.fyko'
@@ -7,4 +8,17 @@ version = '1.0.0'
 
 repositories {
     mavenCentral()
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+application {
+    mainClass.set("pl.fyko.guess_the_number.UI")
+    run {
+        standardInput(System.in)
+    }
 }
