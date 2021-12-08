@@ -28,10 +28,25 @@ class Main {
                     putIfValid(map, args[i].substring(1), Integer.parseInt(args[i+1]));
                 } catch(NumberFormatException e) {
                     System.out.printf("Invalid value for argument %s%n", args[i]);
+                    printHelp();
+                    System.exit(1);
+                } catch(IllegalArgumentException e) {
+                    System.out.println(e.getMessage());
+                    printHelp();
+                    System.exit(1);
                 }
             }
         }
         return map;
+    }
+
+    private static void printHelp() {
+        System.out.println("Usage: java pl.fyko.guess_the_number.Main [OPTIONS]");
+        System.out.println("If no options are passed, the default bounds are set (1-100)");
+        System.out.println();
+        System.out.println("Avaiable options:");
+        System.out.println(" -l\t Lower bound setting (default 1)");
+        System.out.println(" -h\t Higher bound setting (default 100)");
     }
 
     private static void putIfValid(Map<String, Integer> map, String argument, Integer value) throws IllegalArgumentException {
