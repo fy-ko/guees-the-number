@@ -143,7 +143,7 @@ class UI {
             return scanner.nextInt();
         } else {
             scanner.next();
-            return 0;
+            return -1;
         }
     }
 }
