@@ -1,9 +1,6 @@
 package pl.fyko.guess_the_number;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Starting point of the application. Additionally parses arguments into map.
@@ -11,25 +8,25 @@ import java.util.Set;
  * @author Filip Kołodziejczyk
  */
 class Main {
-    private final static Set<String> SETTINGS = Set.of("l", "h");
+    private final static Set<String> SETTINGS = Set.of("l", "L", "H", "C");
+    private final static Map<String, String> LANGUAGES = Map.of("en", "english",
+                                                                "pl", "polski");
 
     public static void main(String... args) {
-        Map<String, Integer> map = argsToMap(args);
-        UI ui = new UI(map.computeIfAbsent("l", s -> 1),
-                        map.computeIfAbsent("h", s -> 100));
+        Map<String, Object> map = argsToMap(args);
+        UI ui = new UI((String) map.computeIfAbsent("l", s -> "en"),
+                (Integer) map.computeIfAbsent("L", s -> 1),
+                (Integer) map.computeIfAbsent("H", s -> 100),
+                (Integer) map.computeIfAbsent("C", s -> 10));
         ui.start();
     }
 
-    private static Map<String, Integer> argsToMap(String... args) {
-        Map<String, Integer> map = new HashMap<>();
+    private static Map<String, Object> argsToMap(String... args) {
+        Map<String, Object> map = new HashMap<>();
         for (int i = 0; i < args.length - 1; i+=2) {
             if (args[i].startsWith("-")) {
                 try {
-                    putIfValid(map, args[i].substring(1), Integer.parseInt(args[i+1]));
-                } catch(NumberFormatException e) {
-                    System.out.printf("Invalid value for argument %s%n", args[i]);
-                    printHelp();
-                    System.exit(1);
+                    putIfValid(map, args[i].substring(1), args[i+1]);
                 } catch(IllegalArgumentException e) {
                     System.out.println(e.getMessage());
                     printHelp();
@@ -45,15 +42,30 @@ class Main {
         System.out.println("If no options are passed, the default bounds are set (1-100)");
         System.out.println();
         System.out.println("Avaiable options:");
-        System.out.println(" -l\t Lower bound setting (default 1)");
-        System.out.println(" -h\t Higher bound setting (default 100)");
+        System.out.println(" -l\t Language setting. Available languages:");
+        printLanguages();
+        System.out.println(" -L\t Lower bound setting (default 1)");
+        System.out.println(" -H\t Higher bound setting (default 100)");
+        System.out.println(" -H\t Max guess count setting (default 10)");
     }
 
-    private static void putIfValid(Map<String, Integer> map, String argument, Integer value) throws IllegalArgumentException {
-        if (SETTINGS.contains(argument)) {
+    private static void printLanguages() {
+        LANGUAGES.forEach((k, v) -> {
+            System.out.printf("\t\t%s - %s%n", k, v);
+        });
+    }
+
+    private static void putIfValid(Map<String, Object> map, String argument, Object value) throws IllegalArgumentException {
+        if (SETTINGS.contains(argument) && isSettingValid(argument, value)) {
             map.put(argument, value);
         } else {
-            throw new IllegalArgumentException(String.format("Invalid argument -%s", argument));
+            throw new IllegalArgumentException(String.format("Invalid argument or value -%s", argument));
         }
+    }
+
+    private static boolean isSettingValid(String key, Object value) {
+        if (!key.equals("l") && !(value instanceof Integer)) {
+            return false;
+        } else return !key.equals("l") || value instanceof String;
     }
 }

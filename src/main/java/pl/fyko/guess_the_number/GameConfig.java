@@ -6,6 +6,10 @@ package pl.fyko.guess_the_number;
  * @author Filip Kołodziejczyk
  */
 class GameConfig {
+    public final static int DEFAULT_LOWER_BOUND = 1;
+    public final static int DEFAULT_HIGHER_BOUND = 100;
+    public final static int DEFAULT_GUESS_COUNT = 10;
+
     private int lowerBound;
     private int higherBound;
     private int maxGuessCount;
@@ -14,6 +18,9 @@ class GameConfig {
         this.lowerBound = lowerBound;
         this.higherBound = higherBound;
         this.maxGuessCount = maxGuessCount;
+
+        verifyBounds();
+        verifyMaxGuessCount();
     }
 
     int getLowerBound() {
@@ -38,5 +45,18 @@ class GameConfig {
 
     void setMaxGuessCount(int maxGuessCount) {
         this.maxGuessCount = maxGuessCount;
+    }
+
+    private void verifyBounds() {
+        if (higherBound <= lowerBound) {
+            lowerBound = GameConfig.DEFAULT_LOWER_BOUND;
+            higherBound = GameConfig.DEFAULT_HIGHER_BOUND;
+        }
+    }
+
+    private void verifyMaxGuessCount() {
+        if (maxGuessCount < 0 || maxGuessCount > 25) {
+            maxGuessCount = GameConfig.DEFAULT_GUESS_COUNT;
+        }
     }
 }
