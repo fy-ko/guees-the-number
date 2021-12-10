@@ -22,3 +22,11 @@ application {
         standardInput(System.in)
     }
 }
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'pl.fyko.guess_the_number.Main'
+        )
+    }
+}
