@@ -50,9 +50,8 @@ class Main {
     }
 
     private static void printLanguages() {
-        LANGUAGES.forEach((k, v) -> {
-            System.out.printf("\t\t%s - %s%n", k, v);
-        });
+        LANGUAGES.forEach((k, v) ->
+            System.out.printf("\t\t%s - %s%n", k, v));
     }
 
     private static void putIfValid(Map<String, Object> map, String argument, Object value) throws IllegalArgumentException {
