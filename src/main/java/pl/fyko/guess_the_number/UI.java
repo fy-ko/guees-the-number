@@ -1,5 +1,8 @@
 package pl.fyko.guess_the_number;
 
+
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.Scanner;
 
 /**
@@ -11,20 +14,17 @@ import java.util.Scanner;
  * @author Filip Kołodziejczyk
  */
 class UI {
-    private final GameConfig gameConfig = new GameConfig();
-    private final MessageGenerator messageGenerator = new MessageGenerator();
+    private final GameConfig gameConfig;
+    private final MessageGenerator messageGenerator;
     private final Scanner scanner;
 
-    public static void main(String[] args) {
-        UI ui = new UI();
-        ui.start();
-    }
-
-    private UI() {
+    UI(String language, int lowerBound, int higherBound, int maxGuessCount) {
         scanner = new Scanner(System.in);
+        gameConfig = new GameConfig(lowerBound, higherBound, maxGuessCount);
+        messageGenerator = new MessageGenerator(ResourceBundle.getBundle("messages", new Locale(language)));
     }
 
-    private void start() {
+    void start() {
         System.out.println(messageGenerator.getWelcomeMessage());
         mainMenu();
     }

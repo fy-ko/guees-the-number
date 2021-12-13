@@ -17,8 +17,16 @@ java {
 }
 
 application {
-    mainClass.set("pl.fyko.guess_the_number.UI")
+    mainClass.set("pl.fyko.guess_the_number.Main")
     run {
         standardInput(System.in)
+    }
+}
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'pl.fyko.guess_the_number.Main'
+        )
     }
 }
